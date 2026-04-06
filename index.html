@@ -7,62 +7,113 @@
     <style>
         body{
           font-family: Arial, sans-serif;
-          padding: 30px;
-          background-color: #f4f4f4;  
+          padding: 40px 30px;
+          background-color: #f0f2f5;
+          max-width: 500px;
+          margin: 0 auto;
         }
         h1{
-            color: #333333;
-            margin-bottom: 20px;
+            color: #222;
+            margin-bottom: 6px;
+            font-size: 26px;
+        }
+        p{
+            color: #999;
+            font-size: 13px;
+            margin-bottom: 24px;
         }
         input{
-            padding: 10px;
+            padding: 10px 14px;
             width: 250px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
+            border: 1.5px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        input:focus{
+            border-color: #007bff;
         }
         button{
-            padding: 10px 15px;
-            margin-left: 10px;
+            padding: 10px 18px;
+            margin-left: 8px;
             background-color: #007bff;
             color: white;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
+            font-size: 14px;
             cursor: pointer;
+            transition: background-color 0.2s, transform 0.1s;
         }
         button:hover{
             background-color: #0056b3;
         }
+        button:active{
+            transform: scale(0.97);
+        }
         ul{
             list-style: none;
             padding: 0;
-            margin-top: 20px;
+            margin-top: 24px;
         }
         li{
             background-color: white;
-            padding: 12px;
-            margin-bottom: 10px;
-            border-radius: 6px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 13px 16px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            border: 1px solid #e8e8e8;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+            cursor: pointer;
+            font-size: 14px;
+            color: #333;
+            transition: background-color 0.15s, color 0.15s;
+        }
+        li:hover{
+            background-color: #fff0f0;
+            border-color: #f4a0a0;
+            color: #aaa;
+            text-decoration: line-through;
         }
     </style>
 </head>
 <body>
-    
+ 
     <h1>Task Manager</h1>
-
+    <p>Hacé clic en una tarea para eliminarla.</p>
+ 
     <input type="text" id="taskInput" placeholder="Escribe una nueva tarea">
-
     <button id="addTaskBtn">Agregar Tarea</button>
-
-    <ul id="taskList">
-        <li>Estudiar JavaScript</li>
-    </ul>
-
+ 
+    <ul id="taskList"></ul>
+ 
     <script>
         const input = document.querySelector('#taskInput')
         const button = document.querySelector('#addTaskBtn')
         const list = document.querySelector('#taskList')
-        button.addEventListener("click", ()=>{})
+ 
+        button.addEventListener("click", () => {
+            const taskText = input.value.trim()
+ 
+            if (taskText === "") {
+                input.style.borderColor = '#f07070'
+                setTimeout(() => { input.style.borderColor = '' }, 700)
+                return
+            }
+ 
+            const li = document.createElement("li")
+            li.textContent = taskText
+ 
+            li.addEventListener("click", () => {
+                li.remove()
+            })
+ 
+            list.appendChild(li)
+            input.value = ""
+        })
+ 
+        input.addEventListener("keypress", (e) => {
+            if (e.key === "Enter") button.click()
+        })
     </script>
 </body>
 </html>
